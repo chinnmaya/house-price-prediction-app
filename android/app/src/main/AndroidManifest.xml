@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.house_price">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="house_price"
+        android:label="Bangalore House Price Prediction"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

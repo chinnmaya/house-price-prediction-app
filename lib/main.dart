@@ -1,3 +1,4 @@
+//created by CHINMAYA 04/11/22
 import 'dart:convert';
 import 'dart:ui';
 
@@ -9,6 +10,7 @@ import 'package:house_price/result.dart';
 import 'package:house_price/service.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -119,6 +121,17 @@ class _getDataState extends State<getData> {
   String? rent = " ";
 
   postdata() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: SimpleCircularProgressBar(
+            mergeMode: true,
+            animationDuration: 10,
+          ),
+        );
+      },
+    );
     print("hi");
     int bhk1 = 0;
     int bhk2 = 0;
@@ -168,6 +181,26 @@ class _getDataState extends State<getData> {
     print(rent);
 
     _update();
+    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Container(
+          child: AlertDialog(
+              title: Text("Predicted Rent:"),
+              content: Text("Rent ₹${res.toStringAsFixed(2).toString()}"
+                  //rent.toString(),
+                  ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("OK")),
+              ]),
+        );
+      },
+    );
   }
 
   @override
@@ -304,26 +337,9 @@ class _getDataState extends State<getData> {
                 onPressed: () {
                   if (_formkey.currentState!.validate()) {
                     postdata();
-                    /* showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          child: AlertDialog(
-                              title: Text("Predicted Rent:"),
-                              content: Text(
-                                  "Rent ₹${res.toStringAsFixed(2).toString()}"
-                                  //rent.toString(),
-                                  ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text("OK")),
-                              ]),
-                        );
-                      },
-                    );*/
+
+                    // Navigator.pop(context);
+
                   }
 
                   //_update();
@@ -331,10 +347,6 @@ class _getDataState extends State<getData> {
               ),
               SizedBox(
                 height: 20,
-              ),
-              Text(
-                "Predicted Rent:₹${res.toStringAsFixed(2).toString()}",
-                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ]),
           ),
